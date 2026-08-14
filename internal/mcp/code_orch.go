@@ -600,14 +600,14 @@ var codeOrchEndpoints = []codeOrchEndpoint{
 	{
 		ID:             "raindrops.batch-update-bookmarks",
 		Method:         "PUT",
-		Path:           "/raindrops",
-		Summary:        "Update properties of multiple bookmarks at once",
+		Path:           "/raindrops/0",
+		Summary:        "Update multiple bookmarks across all collections",
 		Positional:     []string{},
 		TemplateParams: []codeOrchParamBinding{},
 		QueryParams:    []codeOrchParamBinding{},
 		HeaderParams:   []codeOrchParamBinding{},
 		Mutating:       false,
-		keywords:       codeOrchKeywords("raindrops", "batch-update-bookmarks", "Update properties of multiple bookmarks at once", "/raindrops"),
+		keywords:       codeOrchKeywords("raindrops", "batch-update-bookmarks", "Update multiple bookmarks across all collections", "/raindrops/0"),
 	},
 	{
 		ID:             "raindrops.batch-update-bookmarks-in-collection",

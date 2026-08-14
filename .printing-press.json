@@ -1,19 +1,38 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-14T09:30:00Z",
+  "generated_at": "2026-08-14T11:31:54.545816633Z",
   "printing_press_version": "4.30.2",
   "api_name": "raindrop",
-  "display_name": "Raindrop.io",
-  "cli_name": "raindrop",
-  "spec_path": "spec/raindrop-openapi.yaml",
+  "display_name": "Raindrop Io",
+  "cli_name": "raindrop-pp-cli",
+  "creator": {
+    "name": "srijits"
+  },
+  "owner": "srijits",
+  "printer_name": "srijits",
+  "spec_path": "spec.yaml",
   "spec_format": "openapi3",
-  "description": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.",
+  "spec_source": "official",
+  "spec_checksum": "sha256:814ea6f41fb8c9d2f7446303fdccce84014c2c077f79297c77bde6ec9d2af35a",
+  "run_id": "20260814-113154",
+  "category": "productivity",
+  "description": "Complete REST API specification for Raindrop.io bookmark management",
   "mcp_binary": "raindrop-pp-mcp",
+  "mcp_tool_count": 58,
   "mcp_ready": "full",
   "api_version": "1.0.4",
   "auth_type": "bearer_token",
+  "auth_preference": "BearerAuth",
   "auth_env_vars": [
-    "RAINDROP_TOKEN"
+    "PRINTING_PRESS_CLIENT_PROFILE"
+  ],
+  "auth_env_var_specs": [
+    {
+      "name": "PRINTING_PRESS_CLIENT_PROFILE",
+      "kind": "per_call",
+      "required": true,
+      "sensitive": false
+    }
   ],
   "novel_features": [
     {
@@ -58,73 +77,8 @@
     },
     {
       "name": "Durable Triage",
-      "command": "workflow triage status",
+      "command": "workflow status",
       "description": "Run crash-safe bounded triage queues with retry and manual-review states."
     }
-  ],
-  "novel_features_built": [
-    {
-      "name": "Offline Library",
-      "command": "sync",
-      "description": "Mirror bookmarks, collections, tags and highlights for instant offline search."
-    },
-    {
-      "name": "Inbox Review",
-      "command": "inbox review",
-      "description": "Process Unsorted bookmarks in resumable, bounded review sessions."
-    },
-    {
-      "name": "Change History",
-      "command": "changes",
-      "description": "Show field-level bookmark changes between sync snapshots."
-    },
-    {
-      "name": "Tag Health",
-      "command": "tag health",
-      "description": "Discover case variants, near-duplicates, singleton tags and merge candidates."
-    },
-    {
-      "name": "Duplicate Plans",
-      "command": "duplicates plan",
-      "description": "Choose canonical bookmarks while preserving tags, notes and highlights."
-    },
-    {
-      "name": "Revisit Queue",
-      "command": "revisit",
-      "description": "Resurface useful forgotten bookmarks without repeating recent suggestions."
-    },
-    {
-      "name": "Related Bookmarks",
-      "command": "related",
-      "description": "Find explainable related bookmarks offline using text, tags and domains."
-    },
-    {
-      "name": "Highlight Digests",
-      "command": "highlights digest",
-      "description": "Create deduplicated Markdown or JSONL study digests from highlights."
-    },
-    {
-      "name": "Durable Triage",
-      "command": "workflow triage status",
-      "description": "Run crash-safe bounded triage queues with retry and manual-review states."
-    }
-  ],
-  "verify": {
-    "mode": "mock",
-    "pass_rate": 100,
-    "passed": 82,
-    "total": 82,
-    "data_pipeline": true,
-    "verdict": "PASS"
-  },
-  "scorecard": {
-    "steinberger": {
-      "percentage": 96,
-      "grade": "A (1 of 25 dimensions unverified: live_api_verification)",
-      "total": 96
-    },
-    "unverified_dimensions": [
-      "live_api_verification"
-    ]
-  }
+  ]
 }

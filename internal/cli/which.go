@@ -35,7 +35,7 @@ var whichIndex = []whichEntry{
 	{Command: "revisit", Description: "Resurface useful forgotten bookmarks without repeating recent suggestions.", Group: "Knowledge workflows", WhyItMatters: "Use to turn a bookmark archive back into an active reading system."},
 	{Command: "related", Description: "Find explainable related bookmarks offline using text, tags and domains.", Group: "Knowledge workflows", WhyItMatters: "Use for research synthesis without a hosted semantic-search dependency."},
 	{Command: "highlights digest", Description: "Create deduplicated Markdown or JSONL study digests from highlights.", Group: "Knowledge workflows", WhyItMatters: "Use to turn annotations into portable research output."},
-	{Command: "workflow triage status", Description: "Run crash-safe bounded triage queues with retry and manual-review states.", Group: "Automation safety", WhyItMatters: "Use for unattended agents that must resume safely after failures."},
+	{Command: "workflow status", Description: "Run crash-safe bounded triage queues with retry and manual-review states.", Group: "Automation safety", WhyItMatters: "Use for unattended agents that must resume safely after failures."},
 }
 
 // whichMatch pairs an index entry with its ranking score for a query.

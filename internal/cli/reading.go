@@ -18,7 +18,7 @@ func newReadingCmd(flags *rootFlags) *cobra.Command {
 
 func newReadingQueueCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "queue", Short: "List queued bookmarks", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "queue", Short: "List queued bookmarks with their most recent resurfacing time", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err

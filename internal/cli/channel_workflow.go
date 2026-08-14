@@ -23,6 +23,7 @@ func newWorkflowCmd(flags *rootFlags) *cobra.Command {
 	}
 	cmd.AddCommand(newWorkflowArchiveCmd(flags))
 	cmd.AddCommand(newWorkflowStatusCmd(flags))
+
 	cmd.AddCommand(newWorkflowTriageCmd(flags))
 
 	return cmd

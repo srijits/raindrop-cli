@@ -1115,7 +1115,7 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			{"name": "Revisit Queue", "command": "revisit", "description": "Resurface useful forgotten bookmarks without repeating recent suggestions.", "rationale": "Requires local history, scoring and prior-resurfacing state.", "via": "mcp-command-mirror"},
 			{"name": "Related Bookmarks", "command": "related", "description": "Find explainable related bookmarks offline using text, tags and domains.", "rationale": "Requires FTS5 BM25 plus local tag-overlap joins across the mirror.", "via": "mcp-command-mirror"},
 			{"name": "Highlight Digests", "command": "highlights digest", "description": "Create deduplicated Markdown or JSONL study digests from highlights.", "rationale": "Requires local joins and export cursors across bookmarks and highlights.", "via": "mcp-command-mirror"},
-			{"name": "Durable Triage", "command": "workflow triage status", "description": "Run crash-safe bounded triage queues with retry and manual-review states.", "rationale": "Requires atomic claims, unique enqueue constraints and persistent lifecycle receipts.", "via": "mcp-command-mirror"},
+			{"name": "Durable Triage", "command": "workflow status", "description": "Run crash-safe bounded triage queues with retry and manual-review states.", "rationale": "Requires atomic claims, unique enqueue constraints and persistent lifecycle receipts.", "via": "mcp-command-mirror"},
 		},
 		"playbook": []map[string]string{
 			{"topic": "Offline Library", "insight": "Requires durable checkpoints, snapshots and FTS5 indexes across paginated API resources."},

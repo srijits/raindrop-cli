@@ -904,9 +904,9 @@
     },
     {
       "name": "raindrops_batch-update-bookmarks",
-      "description": "Update properties of multiple bookmarks at once. Required: ids. Optional: broken, collection, important (plus 1 more). Returns the updated ResultResponse.",
+      "description": "Update multiple bookmarks across all collections. Required: ids. Optional: broken, collection, important (plus 1 more). Returns the updated ResultResponse.",
       "method": "PUT",
-      "path": "/raindrops",
+      "path": "/raindrops/0",
       "params": [
         {
           "name": "broken",

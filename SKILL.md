@@ -1,6 +1,6 @@
 ---
 name: pp-raindrop
-description: "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows. Trigger phrases: `search my Raindrop bookmarks`, `save this to Raindrop`, `clean my bookmark tags`, `review my Raindrop inbox`, `use Raindrop`, `run Raindrop`."
+description: "Printing Press CLI for Raindrop. Complete REST API specification for Raindrop.io bookmark management"
 author: "srijits"
 license: "Apache-2.0"
 argument-hint: "<command> [args] | install cli|mcp"
@@ -16,7 +16,7 @@ metadata:
         module: github.com/mvanhorn/printing-press-library/library/productivity/raindrop/cmd/raindrop-pp-cli
 ---
 
-# Raindrop.io — Printing Press CLI
+# Raindrop — Printing Press CLI
 
 ## Prerequisites: Install the CLI
 
@@ -38,17 +38,6 @@ go install github.com/mvanhorn/printing-press-library/library/productivity/raind
 If `--version` reports "command not found" after install, the runtime cannot see the binary directory on `$PATH`. Do not proceed with skill commands until verification succeeds.
 
 Use every documented bookmark, collection, tag, highlight, file, import, export and backup operation from one Go CLI. SQLite sync powers historical diffs, resumable review, explainable related-bookmark search and crash-safe automation while the matching MCP server exposes the same command tree to agents.
-
-## When to Use This CLI
-
-Use for scripted or agent-driven Raindrop.io management, offline retrieval, safe bulk cleanup, highlight workflows, and resumable library organization. Prefer local commands when historical state or deterministic automation matters.
-
-## Anti-triggers
-
-Do not use this CLI for:
-- Do not use for browser-extension UI interactions.
-- Do not use destructive apply commands without reviewing their dry-run plans.
-- Do not use local search when current remote state is required and sync is stale.
 
 ## Unique Capabilities
 
@@ -117,17 +106,47 @@ These capabilities aren't available in any other tool for this API.
   ```
 
 ### Automation safety
-- **`workflow triage status`** — Run crash-safe bounded triage queues with retry and manual-review states.
+- **`workflow status`** — Run crash-safe bounded triage queues with retry and manual-review states.
 
   _Use for unattended agents that must resume safely after failures._
 
   ```bash
-  raindrop workflow triage status --agent --home /tmp/raindrop-pp
+  raindrop workflow status --agent --home /tmp/raindrop-pp
   ```
 
-## HTTP Transport
+## Recipes
 
-This CLI uses Chrome-compatible HTTP transport for browser-facing endpoints. It does not require a resident browser process for normal API calls.
+### Narrow remote search
+
+```bash
+raindrop raindrops search --collection 0 --search 'site:github.com #go' --agent --select items._id,items.title,items.link,items.tags
+```
+
+Return only fields an agent needs.
+
+### Refresh offline mirror
+
+```bash
+raindrop sync --agent --home /tmp/raindrop-pp
+```
+
+Incrementally fetch library resources into SQLite.
+
+### Audit tags
+
+```bash
+raindrop tag health --agent
+```
+
+Find deterministic cleanup candidates without mutation.
+
+### Build reading queue
+
+```bash
+raindrop revisit --older-than 180d --limit 20 --agent
+```
+
+Resurface forgotten high-value items.
 
 ## Command Reference
 
@@ -185,7 +204,7 @@ This CLI uses Chrome-compatible HTTP transport for browser-facing endpoints. It 
 - `raindrop-pp-cli raindrops batch-delete-bookmarks` — Delete multiple bookmarks at once
 - `raindrop-pp-cli raindrops batch-delete-bookmarks-in-collection` — Delete multiple bookmarks in a specific collection or empty trash/collection
 - `raindrop-pp-cli raindrops batch-tag-bookmarks` — Batch operation to add or remove tags from multiple bookmarks
-- `raindrop-pp-cli raindrops batch-update-bookmarks` — Update properties of multiple bookmarks at once
+- `raindrop-pp-cli raindrops batch-update-bookmarks` — Update multiple bookmarks across all collections
 - `raindrop-pp-cli raindrops batch-update-bookmarks-in-collection` — Update properties of multiple bookmarks in a specific collection at once
 - `raindrop-pp-cli raindrops bulk-move-bookmarks` — Move multiple bookmarks to a different collection
 - `raindrop-pp-cli raindrops get-all-bookmarks` — Retrieves all bookmarks from all collections with filtering options
@@ -220,40 +239,6 @@ raindrop-pp-cli which "<capability in your own words>"
 ```
 
 `which` resolves a natural-language capability query to the best matching command from this CLI's curated feature index. Exit code `0` means at least one match; exit code `2` means no confident match — fall back to `--help` or use a narrower query.
-
-## Recipes
-
-### Narrow remote search
-
-```bash
-raindrop raindrops search --collection 0 --search 'site:github.com #go' --agent --select items._id,items.title,items.link,items.tags
-```
-
-Return only fields an agent needs.
-
-### Refresh offline mirror
-
-```bash
-raindrop sync --agent --home /tmp/raindrop-pp
-```
-
-Incrementally fetch library resources into SQLite.
-
-### Audit tags
-
-```bash
-raindrop tag health --agent
-```
-
-Find deterministic cleanup candidates without mutation.
-
-### Build reading queue
-
-```bash
-raindrop revisit --older-than 180d --limit 20 --agent
-```
-
-Resurface forgotten high-value items.
 
 ## Auth Setup
 

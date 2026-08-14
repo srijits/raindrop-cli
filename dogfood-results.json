@@ -1,7 +1,7 @@
 {
   "dir": "\u003ccli-dir\u003e/raindrop",
-  "spec_path": "\u003crunstate\u003e/raindrop-openapi.yaml",
-  "spec_source": "caller",
+  "spec_path": "\u003ccli-dir\u003e/spec.yaml",
+  "spec_source": "bundled",
   "verdict": "WARN",
   "path_check": {
     "tested": 5,
@@ -42,10 +42,11 @@
     "detail": "sync uses domain-specific Upsert methods; search uses domain-specific Search methods; 4 domain tables found"
   },
   "example_check": {
-    "tested": 10,
-    "with_examples": 10,
-    "valid_examples": 10,
-    "detail": "10/10 commands have examples"
+    "tested": 0,
+    "with_examples": 0,
+    "valid_examples": 0,
+    "skipped": true,
+    "detail": "could not build CLI binary: exit status 1"
   },
   "wiring_check": {
     "command_tree": {
@@ -64,14 +65,7 @@
   },
   "novel_features_check": {
     "planned": 9,
-    "found": 9,
-    "depth_mismatches": [
-      {
-        "command": "workflow triage status",
-        "advertised": "workflow triage status",
-        "actual": "auth status, sync status, workflow status"
-      }
-    ]
+    "found": 9
   },
   "mcp_surface_parity": {
     "state": "runtime_walking",
@@ -83,7 +77,15 @@
     "exempted_via_store": 9
   },
   "description_drift_check": {
-    "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows."
+    "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.",
+    "findings": [
+      {
+        "surface": "manifest.description",
+        "file": ".printing-press.json",
+        "actual": "Complete REST API specification for Raindrop.io bookmark management",
+        "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows."
+      }
+    ]
   },
   "source_client_check": {
     "checked": 9
@@ -102,6 +104,7 @@
     "skipped": true
   },
   "issues": [
-    "1 novel feature command-depth mismatches: workflow triage status advertised as workflow triage status but registered as auth status, sync status, workflow status"
+    "example check skipped: could not build CLI binary: exit status 1",
+    "1 description surface(s) drifted from research.json narrative: manifest.description in .printing-press.json is \"Complete REST API specification for Raindrop.io bookmark management\"; expected \"Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.\""
   ]
 }

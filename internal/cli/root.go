@@ -257,7 +257,7 @@ Highlights (not in the official API docs):
   • revisit   Resurface useful forgotten bookmarks without repeating recent suggestions.
   • related   Find explainable related bookmarks offline using text, tags and domains.
   • highlights digest   Create deduplicated Markdown or JSONL study digests from highlights.
-  • workflow triage status   Run crash-safe bounded triage queues with retry and manual-review states.
+  • workflow status   Run crash-safe bounded triage queues with retry and manual-review states.
 
 Agent mode: add --agent to any command for JSON output + non-interactive mode.
 Health check: run 'raindrop doctor' to verify auth and connectivity.

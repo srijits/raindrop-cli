@@ -1,29 +1,124 @@
-# Raindrop.io CLI
+# Raindrop CLI
 
 **Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.**
 
 Use every documented bookmark, collection, tag, highlight, file, import, export and backup operation from one Go CLI. SQLite sync powers historical diffs, resumable review, explainable related-bookmark search and crash-safe automation while the matching MCP server exposes the same command tree to agents.
 
-Learn more at [Raindrop.io](https://developer.raindrop.io).
-
-Created by [@srijits](https://github.com/srijits) (srijits).
+Learn more at [Raindrop](https://developer.raindrop.io).
 
 ## Install
 
-Requires Go 1.26. Build both the CLI and MCP server from this checkout:
+The recommended path installs both the `raindrop-pp-cli` binary and the `pp-raindrop` agent skill (Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, and other agents supported by the upstream [`skills`](https://github.com/vercel-labs/skills) CLI) in one shot:
 
 ```bash
-make build-all
-./bin/raindrop --help
+npx -y @mvanhorn/printing-press-library install raindrop
 ```
 
-Install the CLI as `raindrop` into your Go bin directory:
+For CLI only (no skill):
 
 ```bash
-make install
+npx -y @mvanhorn/printing-press-library install raindrop --cli-only
 ```
 
-The project was generated with [CLI Printing Press](https://github.com/mvanhorn/cli-printing-press). It is not yet published in Printing Press Library, so library and release installer commands do not apply to this checkout.
+For skill only — installs the skill into the same agents as the default command above, but skips the CLI binary (use this to update or reinstall just the skill):
+
+```bash
+npx -y @mvanhorn/printing-press-library install raindrop --skill-only
+```
+
+To constrain the skill install to one or more specific agents (repeatable — agent names match the [`skills`](https://github.com/vercel-labs/skills) CLI):
+
+```bash
+npx -y @mvanhorn/printing-press-library install raindrop --agent claude-code
+npx -y @mvanhorn/printing-press-library install raindrop --agent claude-code --agent codex
+```
+
+### Without Node (Go fallback)
+
+If `npx` isn't available (no Node, offline), install the CLI directly via Go (requires Go 1.26.5 or newer):
+
+```bash
+go install github.com/mvanhorn/printing-press-library/library/productivity/raindrop/cmd/raindrop-pp-cli@latest
+```
+
+This installs the CLI only — no skill.
+
+### Pre-built binary
+
+Download a pre-built binary for your platform from the [latest release](https://github.com/mvanhorn/printing-press-library/releases/tag/raindrop-current). On macOS, clear the Gatekeeper quarantine: `xattr -d com.apple.quarantine <binary>`. On Unix, mark it executable: `chmod +x <binary>`.
+
+<!-- pp-hermes-install-anchor -->
+## Install for Hermes
+
+Install the CLI binary first. The installer writes binaries to a per-user managed bin directory by default: `$HOME/.local/bin` on macOS/Linux and `%LOCALAPPDATA%\Programs\PrintingPress\bin` on Windows.
+
+```bash
+npx -y @mvanhorn/printing-press-library install raindrop --cli-only
+```
+
+Then install the focused Hermes skill.
+
+From the Hermes CLI:
+
+```bash
+hermes skills install mvanhorn/printing-press-library/cli-skills/pp-raindrop --force
+```
+
+Inside a Hermes chat session:
+
+```bash
+/skills install mvanhorn/printing-press-library/cli-skills/pp-raindrop --force
+```
+
+Restart the Hermes session or gateway if the newly installed skill is not visible immediately.
+
+## Install for OpenClaw
+Install both the CLI binary and the focused OpenClaw skill. The installer defaults binaries to a per-user bin directory (`$HOME/.local/bin` on macOS/Linux, `%LOCALAPPDATA%\Programs\PrintingPress\bin` on Windows):
+
+```bash
+npx -y @mvanhorn/printing-press-library install raindrop --agent openclaw
+```
+
+Restart the OpenClaw session or gateway if the newly installed skill is not visible immediately.
+
+## Use with Claude Desktop
+
+This CLI ships an [MCPB](https://github.com/modelcontextprotocol/mcpb) bundle — Claude Desktop's standard format for one-click MCP extension installs (no JSON config required).
+
+To install:
+
+1. Download the `.mcpb` for your platform from the [latest release](https://github.com/mvanhorn/printing-press-library/releases/tag/raindrop-current).
+2. Double-click the `.mcpb` file. Claude Desktop opens and walks you through the install.
+3. Fill in `RAINDROP_TOKEN` when Claude Desktop prompts you.
+
+Requires Claude Desktop 1.0.0 or later. Pre-built bundles ship for macOS Apple Silicon (`darwin-arm64`) and Windows (`amd64`, `arm64`); for other platforms, use the manual config below.
+
+<details>
+<summary>Manual JSON config (advanced)</summary>
+
+If you can't use the MCPB bundle (older Claude Desktop, unsupported platform), install the MCP binary and configure it manually.
+
+
+```bash
+go install github.com/mvanhorn/printing-press-library/library/productivity/raindrop/cmd/raindrop-pp-mcp@latest
+```
+
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "raindrop": {
+      "command": "raindrop-pp-mcp",
+      "env": {
+        "RAINDROP_TOKEN": "<your-key>"
+      }
+    }
+  }
+}
+```
+
+</details>
 
 ## Authentication
 
@@ -110,12 +205,12 @@ These capabilities aren't available in any other tool for this API.
   ```
 
 ### Automation safety
-- **`workflow triage status`** — Run crash-safe bounded triage queues with retry and manual-review states.
+- **`workflow status`** — Run crash-safe bounded triage queues with retry and manual-review states.
 
   _Use for unattended agents that must resume safely after failures._
 
   ```bash
-  raindrop workflow triage status --agent --home /tmp/raindrop-pp
+  raindrop workflow status --agent --home /tmp/raindrop-pp
   ```
 
 ## Recipes
@@ -277,7 +372,7 @@ Manage raindrops
 - **`raindrop-pp-cli raindrops batch-delete-bookmarks`** - Delete multiple bookmarks at once
 - **`raindrop-pp-cli raindrops batch-delete-bookmarks-in-collection`** - Delete multiple bookmarks in a specific collection or empty trash/collection
 - **`raindrop-pp-cli raindrops batch-tag-bookmarks`** - Batch operation to add or remove tags from multiple bookmarks
-- **`raindrop-pp-cli raindrops batch-update-bookmarks`** - Update properties of multiple bookmarks at once
+- **`raindrop-pp-cli raindrops batch-update-bookmarks`** - Update multiple bookmarks across all collections
 - **`raindrop-pp-cli raindrops batch-update-bookmarks-in-collection`** - Update properties of multiple bookmarks in a specific collection at once
 - **`raindrop-pp-cli raindrops bulk-move-bookmarks`** - Move multiple bookmarks to a different collection
 - **`raindrop-pp-cli raindrops get-all-bookmarks`** - Retrieves all bookmarks from all collections with filtering options
@@ -390,25 +485,11 @@ If you use agentcookie to sync secrets across machines, this CLI auto-adopts age
 - Check the resource ID is correct
 - Run the `list` command to see available items
 
+---
+
+Generated by [CLI Printing Press](https://github.com/mvanhorn/cli-printing-press)
+
 ### API-specific
 - **401 Unauthorized** — Refresh test token at https://app.raindrop.io/settings/integrations and update RAINDROP_TOKEN.
 - **429 Too Many Requests** — Let built-in Retry-After backoff finish or reduce sync page concurrency.
 - **Offline results look stale** — Run `raindrop sync` and inspect `raindrop sync status`.
-
-## HTTP Transport
-
-This CLI uses Chrome-compatible HTTP transport for browser-facing endpoints. It does not require a resident browser process for normal API calls.
-
-TLS certificates are verified by default. For a trusted development or self-signed endpoint only, pass `--insecure` for one invocation, set `RAINDROP_SKIP_TLS_VERIFY=true` for the current environment, or set `skip_tls_verify = true` in the config file for a persistent override.
-
----
-
-## Sources & Inspiration
-
-This CLI was built by studying these projects and resources:
-
-- [**hiromitsusasaki/raindrop-io-mcp-server**](https://github.com/hiromitsusasaki/raindrop-io-mcp-server) — TypeScript (73 stars)
-- [**kyoji2/raindrop-cli**](https://github.com/kyoji2/raindrop-cli) — TypeScript (15 stars)
-- [**adeze/raindrop-mcp**](https://github.com/adeze/raindrop-mcp) — TypeScript
-
-Generated by [CLI Printing Press](https://github.com/mvanhorn/cli-printing-press)

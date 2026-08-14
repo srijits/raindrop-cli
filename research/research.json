@@ -120,10 +120,10 @@
     },
     {
       "name": "Durable Triage",
-      "command": "workflow triage status",
+      "command": "workflow status",
       "description": "Run crash-safe bounded triage queues with retry and manual-review states.",
       "rationale": "Requires atomic claims, unique enqueue constraints and persistent lifecycle receipts.",
-      "example": "raindrop workflow triage status --agent --home /tmp/raindrop-pp",
+      "example": "raindrop workflow status --agent --home /tmp/raindrop-pp",
       "why_it_matters": "Use for unattended agents that must resume safely after failures.",
       "group": "Automation safety"
     }
@@ -203,10 +203,10 @@
     },
     {
       "name": "Durable Triage",
-      "command": "workflow triage status",
+      "command": "workflow status",
       "description": "Run crash-safe bounded triage queues with retry and manual-review states.",
       "rationale": "Requires atomic claims, unique enqueue constraints and persistent lifecycle receipts.",
-      "example": "raindrop workflow triage status --agent --home /tmp/raindrop-pp",
+      "example": "raindrop workflow status --agent --home /tmp/raindrop-pp",
       "why_it_matters": "Use for unattended agents that must resume safely after failures.",
       "group": "Automation safety"
     }

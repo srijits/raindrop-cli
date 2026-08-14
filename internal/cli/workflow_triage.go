@@ -81,12 +81,16 @@ func newTriageNextCmd(flags *rootFlags) *cobra.Command {
 		for rows.Next() {
 			var id string
 			if err := rows.Scan(&id); err != nil {
-				rows.Close()
 				return err
 			}
 			ids = append(ids, id)
 		}
-		rows.Close()
+		if err := rows.Err(); err != nil {
+			return err
+		}
+		if err := rows.Close(); err != nil {
+			return err
+		}
 		for _, id := range ids {
 			if _, err := tx.ExecContext(cmd.Context(), `UPDATE triage_items SET state='inflight',attempts=attempts+1,updated_at=CURRENT_TIMESTAMP WHERE workflow_id=? AND bookmark_id=? AND state IN ('queued','retry')`, workflowID, id); err != nil {
 				return err

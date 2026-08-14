@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Raindrop.io API
-  description: Complete REST API specification for Raindrop.io bookmark management
+  description: Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.
   version: 1.0.4
   contact:
     name: Raindrop.io API
