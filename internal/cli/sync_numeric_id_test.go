@@ -6,6 +6,7 @@ package cli
 import (
 	"encoding/json"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"raindrop-pp-cli/internal/store"
@@ -43,5 +44,24 @@ func TestSyncSingleObject_PreservesLargeIntegerResourceIDs(t *testing.T) {
 	}
 	if literalMatches != 1 {
 		t.Fatalf("literal id matches = %d, want 1", literalMatches)
+	}
+}
+
+func TestRaindropsSyncUsesAllBookmarksEndpoint(t *testing.T) {
+	t.Parallel()
+	got, err := syncResourcePath("raindrops")
+	if err != nil {
+		t.Fatalf("syncResourcePath: %v", err)
+	}
+	if got != "/raindrops/0" {
+		t.Fatalf("syncResourcePath(raindrops) = %q, want /raindrops/0", got)
+	}
+}
+
+func TestDefaultSyncResourcesDoNotDuplicateAliases(t *testing.T) {
+	t.Parallel()
+	want := []string{"collections", "highlights", "raindrops", "tags"}
+	if got := defaultSyncResources(); !reflect.DeepEqual(got, want) {
+		t.Fatalf("defaultSyncResources() = %v, want %v", got, want)
 	}
 }

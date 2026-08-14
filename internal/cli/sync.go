@@ -1901,9 +1901,7 @@ func defaultSyncResources() []string {
 		"collections",
 		"highlights",
 		"raindrops",
-		"raindrops-0",
 		"tags",
-		"tags-0",
 	}
 }
 
@@ -1948,7 +1946,7 @@ func syncResourcePath(resource string) (string, error) {
 	paths := map[string]string{ // #nosec G101 -- endpoint paths, not credentials.
 		"collections":        "/collections",
 		"highlights":         "/highlights",
-		"raindrops":          "/raindrops",
+		"raindrops":          "/raindrops/0",
 		"raindrops-0":        "/raindrops/0",
 		"raindrops-multiple": "/raindrops/multiple",
 		"tags":               "/tags",

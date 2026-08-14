@@ -111,13 +111,13 @@ In local mode: searches locally synced data only.`,
 				return cmd.Help()
 			}
 			query := args[0]
-			// This API has a search endpoint: GET /raindrops
+			// Raindrop searches all collections through collection ID 0.
 			if !offline && flags.dataSource != "local" {
 				c, err := flags.newClient()
 				if err != nil {
 					return err
 				}
-				data, getErr := c.Get(cmd.Context(), "/raindrops", map[string]string{
+				data, getErr := c.Get(cmd.Context(), "/raindrops/0", map[string]string{
 					"search": query,
 				})
 				if getErr == nil {

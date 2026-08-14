@@ -15,6 +15,53 @@
   "auth_env_vars": [
     "RAINDROP_TOKEN"
   ],
+  "novel_features": [
+    {
+      "name": "Offline Library",
+      "command": "sync",
+      "description": "Mirror bookmarks, collections, tags and highlights for instant offline search."
+    },
+    {
+      "name": "Inbox Review",
+      "command": "inbox review",
+      "description": "Process Unsorted bookmarks in resumable, bounded review sessions."
+    },
+    {
+      "name": "Change History",
+      "command": "changes",
+      "description": "Show field-level bookmark changes between sync snapshots."
+    },
+    {
+      "name": "Tag Health",
+      "command": "tag health",
+      "description": "Discover case variants, near-duplicates, singleton tags and merge candidates."
+    },
+    {
+      "name": "Duplicate Plans",
+      "command": "duplicates plan",
+      "description": "Choose canonical bookmarks while preserving tags, notes and highlights."
+    },
+    {
+      "name": "Revisit Queue",
+      "command": "revisit",
+      "description": "Resurface useful forgotten bookmarks without repeating recent suggestions."
+    },
+    {
+      "name": "Related Bookmarks",
+      "command": "related",
+      "description": "Find explainable related bookmarks offline using text, tags and domains."
+    },
+    {
+      "name": "Highlight Digests",
+      "command": "highlights digest",
+      "description": "Create deduplicated Markdown or JSONL study digests from highlights."
+    },
+    {
+      "name": "Durable Triage",
+      "command": "workflow triage status",
+      "description": "Run crash-safe bounded triage queues with retry and manual-review states."
+    }
+  ],
   "novel_features_built": [
     {
       "name": "Offline Library",

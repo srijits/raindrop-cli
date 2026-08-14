@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -28,7 +29,7 @@ func newRaindropsSearchCmd(flags *rootFlags) *cobra.Command {
 		Use:         "search",
 		Short:       "Search bookmarks with advanced filtering options",
 		Example:     "  raindrop-pp-cli raindrops search",
-		Annotations: map[string]string{"pp:endpoint": "raindrops.search", "pp:method": "GET", "pp:path": "/raindrops", "mcp:read-only": "true"},
+		Annotations: map[string]string{"pp:endpoint": "raindrops.search", "pp:method": "GET", "pp:path": "/raindrops/0", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if cmd.Flags().Changed("sort") {
 				allowedSort := []string{"+created", "-created", "+title", "-title", "+domain", "-domain", "+score", "-score"}
@@ -43,7 +44,10 @@ func newRaindropsSearchCmd(flags *rootFlags) *cobra.Command {
 					return fmt.Errorf("invalid value %q for --%s: must be one of %v", flagSort, "sort", allowedSort)
 				}
 			}
-			path := "/raindrops"
+			path := "/raindrops/0"
+			if flagCollection != 0 {
+				path = "/raindrops/" + strconv.Itoa(flagCollection)
+			}
 			c, err := flags.newClient()
 			if err != nil {
 				return err
@@ -53,7 +57,6 @@ func newRaindropsSearchCmd(flags *rootFlags) *cobra.Command {
 			}
 			data, prov, err := resolvePaginatedReadWithStrategy(cmd.Context(), c, flags, "auto", "raindrops", path, map[string]string{
 				"search":       formatCLIParamValue(flagSearch),
-				"collection":   formatCLIParamValue(flagCollection),
 				"createdStart": formatCLIParamValue(flagCreatedStart),
 				"createdEnd":   formatCLIParamValue(flagCreatedEnd),
 				"important":    formatCLIParamValue(flagImportant),
