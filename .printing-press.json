@@ -1,0 +1,83 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-08-14T09:30:00Z",
+  "printing_press_version": "4.30.2",
+  "api_name": "raindrop",
+  "display_name": "Raindrop.io",
+  "cli_name": "raindrop",
+  "spec_path": "spec/raindrop-openapi.yaml",
+  "spec_format": "openapi3",
+  "description": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.",
+  "mcp_binary": "raindrop-pp-mcp",
+  "mcp_ready": "full",
+  "api_version": "1.0.4",
+  "auth_type": "bearer_token",
+  "auth_env_vars": [
+    "RAINDROP_TOKEN"
+  ],
+  "novel_features_built": [
+    {
+      "name": "Offline Library",
+      "command": "sync",
+      "description": "Mirror bookmarks, collections, tags and highlights for instant offline search."
+    },
+    {
+      "name": "Inbox Review",
+      "command": "inbox review",
+      "description": "Process Unsorted bookmarks in resumable, bounded review sessions."
+    },
+    {
+      "name": "Change History",
+      "command": "changes",
+      "description": "Show field-level bookmark changes between sync snapshots."
+    },
+    {
+      "name": "Tag Health",
+      "command": "tag health",
+      "description": "Discover case variants, near-duplicates, singleton tags and merge candidates."
+    },
+    {
+      "name": "Duplicate Plans",
+      "command": "duplicates plan",
+      "description": "Choose canonical bookmarks while preserving tags, notes and highlights."
+    },
+    {
+      "name": "Revisit Queue",
+      "command": "revisit",
+      "description": "Resurface useful forgotten bookmarks without repeating recent suggestions."
+    },
+    {
+      "name": "Related Bookmarks",
+      "command": "related",
+      "description": "Find explainable related bookmarks offline using text, tags and domains."
+    },
+    {
+      "name": "Highlight Digests",
+      "command": "highlights digest",
+      "description": "Create deduplicated Markdown or JSONL study digests from highlights."
+    },
+    {
+      "name": "Durable Triage",
+      "command": "workflow triage status",
+      "description": "Run crash-safe bounded triage queues with retry and manual-review states."
+    }
+  ],
+  "verify": {
+    "mode": "mock",
+    "pass_rate": 100,
+    "passed": 82,
+    "total": 82,
+    "data_pipeline": true,
+    "verdict": "PASS"
+  },
+  "scorecard": {
+    "steinberger": {
+      "percentage": 96,
+      "grade": "A (1 of 25 dimensions unverified: live_api_verification)",
+      "total": 96
+    },
+    "unverified_dimensions": [
+      "live_api_verification"
+    ]
+  }
+}
