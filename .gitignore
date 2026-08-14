@@ -7,5 +7,3 @@ bin/
 /raindrop
 dist/
 coverage.out
-classification-*.json
-classification-audit/
