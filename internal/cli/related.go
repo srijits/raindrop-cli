@@ -16,16 +16,17 @@ import (
 func newNovelRelatedCmd(flags *rootFlags) *cobra.Command {
 	var flagLimit int
 	var dbPath string
+	var bookmarkID string
 
 	cmd := &cobra.Command{
-		Use:         "related <bookmark-id>",
-		Args:        cobra.ExactArgs(1),
+		Use:         "related",
+		Args:        cobra.MaximumNArgs(1),
 		Short:       "Find explainable related bookmarks offline using text, tags and domains.",
-		Example:     "  raindrop-pp-cli related 912345678 --limit 10 --agent",
+		Example:     "  raindrop-pp-cli related --limit 10 --agent",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if dryRunOK(flags) {
-				return nil
+				return writeDryRun(cmd.OutOrStdout(), flags, "related bookmarks")
 			}
 			db, _, err := openNovelStore(cmd.Context(), dbPath)
 			if err != nil {
@@ -36,15 +37,26 @@ func newNovelRelatedCmd(flags *rootFlags) *cobra.Command {
 			if err != nil {
 				return err
 			}
+			var targetID = bookmarkID
+			if targetID == "" {
+				if len(args) == 1 {
+					targetID = args[0]
+				} else if len(items) > 0 {
+					targetID = items[0].ID
+				}
+			}
 			var target *localBookmark
 			for i := range items {
-				if items[i].ID == args[0] {
+				if items[i].ID == targetID {
 					target = &items[i]
 					break
 				}
 			}
 			if target == nil {
-				return fmt.Errorf("bookmark %s not found in local mirror", args[0])
+				if targetID == "" {
+					return fmt.Errorf("local mirror is empty; run 'raindrop-pp-cli sync' first")
+				}
+				return fmt.Errorf("bookmark %s not found in local mirror", targetID)
 			}
 			type scored struct {
 				Bookmark localBookmark `json:"bookmark"`
@@ -67,6 +79,7 @@ func newNovelRelatedCmd(flags *rootFlags) *cobra.Command {
 		},
 	}
 	cmd.Flags().IntVar(&flagLimit, "limit", 10, "Maximum related bookmarks")
+	cmd.Flags().StringVar(&bookmarkID, "bookmark-id", "", "Bookmark ID; defaults to the first bookmark in the local mirror")
 	cmd.Flags().StringVar(&dbPath, "db", "", "SQLite database path")
 	return cmd
 }

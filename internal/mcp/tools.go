@@ -958,14 +958,10 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 		"api":         "raindrop",
 		"description": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.",
 		"archetype":   "content",
-		"tool_count":  58,
+		"tool_count":  54,
 		"paths":       paths,
 		// tool_surface tells agents which surface a capability lives on.
-		"tool_surface": "MCP exposes typed endpoint tools plus a runtime mirror of user-facing CLI commands. Endpoint tools keep typed schemas; command-mirror tools shell out to the companion raindrop-pp-cli binary.",
-		// learn_protocol is generated from the single shared source of
-		// truth (the exported constant internal/learn.RecallFirstProtocol)
-		// also consumed by the CLI agent-context command, so the MCP and
-		// CLI agent surfaces cannot drift.
+		"tool_surface":   "MCP exposes typed endpoint tools plus a runtime mirror of user-facing CLI commands. Endpoint tools keep typed schemas; command-mirror tools shell out to the companion raindrop-pp-cli binary.",
 		"learn_protocol": learn.RecallFirstProtocol,
 		"auth": map[string]any{
 			"type": "bearer_token",
@@ -984,7 +980,7 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			{
 				"name":        "bookmark_transfer",
 				"description": "Manage bookmark transfer",
-				"endpoints":   []string{"export-bookmarks", "get-export-status", "get-import-status", "import-bookmarks", "import-from-url"},
+				"endpoints":   []string{"export-bookmarks", "import-bookmarks", "import-from-url"},
 				"searchable":  true,
 				"writable":    true,
 			},
@@ -1015,7 +1011,7 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			{
 				"name":        "collections",
 				"description": "Manage collections",
-				"endpoints":   []string{"get-all", "remove-empty", "reorder", "toggle-expansion"},
+				"endpoints":   []string{"get-all", "remove-empty", "update-layout"},
 				"syncable":    true,
 				"searchable":  true,
 				"writable":    true,
@@ -1077,7 +1073,7 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			{
 				"name":        "raindrops",
 				"description": "Manage raindrops",
-				"endpoints":   []string{"batch-delete-bookmarks", "batch-delete-bookmarks-in-collection", "batch-tag-bookmarks", "batch-update-bookmarks", "batch-update-bookmarks-in-collection", "bulk-move-bookmarks", "get-all-bookmarks", "get-bookmarks-by-collection", "get-multiple-bookmarks", "get-single-bookmark", "search", "suggest-tags-collections-covers"},
+				"endpoints":   []string{"batch-delete-bookmarks", "batch-delete-bookmarks-in-collection", "batch-tag-bookmarks", "batch-update-bookmarks", "batch-update-bookmarks-in-collection", "bulk-move-bookmarks", "get-all-bookmarks", "get-bookmarks-by-collection", "get-multiple-bookmarks", "get-single-bookmark", "search"},
 				"syncable":    true,
 				"searchable":  true,
 				"writable":    true,

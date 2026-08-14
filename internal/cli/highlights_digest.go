@@ -97,6 +97,7 @@ func newHighlightsExportCmd(flags *rootFlags) *cobra.Command {
 	var dbPath, format string
 	cmd := &cobra.Command{
 		Use: "export", Short: "Export synced highlights as Markdown or JSONL",
+		Example:     "  raindrop-pp-cli highlights export --format md",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if format != "md" && format != "jsonl" {
@@ -112,6 +113,16 @@ func newHighlightsExportCmd(flags *rootFlags) *cobra.Command {
 				return err
 			}
 			sort.Slice(rows, func(i, j int) bool { return string(rows[i]) < string(rows[j]) })
+			if flags.asJSON {
+				items := make([]any, 0, len(rows))
+				for _, raw := range rows {
+					var item any
+					if json.Unmarshal(raw, &item) == nil {
+						items = append(items, item)
+					}
+				}
+				return printJSONFiltered(cmd.OutOrStdout(), map[string]any{"format": "json", "count": len(items), "items": items}, flags)
+			}
 			for _, raw := range rows {
 				if format == "jsonl" {
 					if _, err := fmt.Fprintln(cmd.OutOrStdout(), string(raw)); err != nil {

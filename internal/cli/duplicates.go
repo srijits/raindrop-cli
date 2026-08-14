@@ -15,6 +15,7 @@ func newNovelDuplicatesCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:         "duplicates",
 		Short:       "Plan and safely apply duplicate cleanup",
+		Example:     "  raindrop-pp-cli duplicates plan --canonical richest --agent",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		RunE:        parentNoSubcommandRunE(flags),
 	}

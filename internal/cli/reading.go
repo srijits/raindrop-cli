@@ -11,14 +11,14 @@ import (
 )
 
 func newReadingCmd(flags *rootFlags) *cobra.Command {
-	cmd := &cobra.Command{Use: "reading", Short: "Manage local reading queue", RunE: parentNoSubcommandRunE(flags)}
+	cmd := &cobra.Command{Use: "reading", Short: "Manage local reading queue", Example: "  raindrop-pp-cli reading queue --agent", RunE: parentNoSubcommandRunE(flags)}
 	cmd.AddCommand(newReadingQueueCmd(flags), newReadingDoneCmd(flags))
 	return cmd
 }
 
 func newReadingQueueCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "queue", Short: "List queued bookmarks with their most recent resurfacing time", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "queue", Short: "List queued bookmarks with their most recent resurfacing time", Example: "  raindrop-pp-cli reading queue --agent", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err
@@ -45,7 +45,7 @@ func newReadingQueueCmd(flags *rootFlags) *cobra.Command {
 
 func newReadingDoneCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "done <bookmark-id>", Short: "Mark queued bookmark completed", Args: cobra.ExactArgs(1), Annotations: map[string]string{"mcp:local-write": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "done <bookmark-id>", Short: "Mark queued bookmark completed", Example: "  raindrop-pp-cli reading done 912345678 --agent", Args: cobra.ExactArgs(1), Annotations: map[string]string{"mcp:local-write": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err

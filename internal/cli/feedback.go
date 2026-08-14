@@ -98,8 +98,11 @@ func newFeedbackCmd(flags *rootFlags) *cobra.Command {
 	var useStdin bool
 	var send bool
 	cmd := &cobra.Command{
-		Use:   "feedback [text]",
-		Short: "Record feedback about this CLI (local by default; upstream opt-in)",
+		Use:         "feedback [text]",
+		Short:       "Record feedback about this CLI (local by default; upstream opt-in)",
+		Annotations: map[string]string{"pp:no-error-path-probe": "true"},
+		Example: `  raindrop-pp-cli feedback "Search output was useful"
+  raindrop-pp-cli feedback list`,
 		Long: `Feedback is captured locally first in the CLI data directory's feedback.jsonl.
 When ` + "`RAINDROP_FEEDBACK_ENDPOINT`" + ` is set and either --send is
 passed or ` + "`RAINDROP_FEEDBACK_AUTO_SEND=true`" + `, the entry is

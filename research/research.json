@@ -105,7 +105,7 @@
       "command": "related",
       "description": "Find explainable related bookmarks offline using text, tags and domains.",
       "rationale": "Requires FTS5 BM25 plus local tag-overlap joins across the mirror.",
-      "example": "raindrop related 912345678 --limit 10 --agent",
+      "example": "raindrop related --limit 10 --agent",
       "why_it_matters": "Use for research synthesis without a hosted semantic-search dependency.",
       "group": "Knowledge workflows"
     },
@@ -188,7 +188,7 @@
       "command": "related",
       "description": "Find explainable related bookmarks offline using text, tags and domains.",
       "rationale": "Requires FTS5 BM25 plus local tag-overlap joins across the mirror.",
-      "example": "raindrop related 912345678 --limit 10 --agent",
+      "example": "raindrop related --limit 10 --agent",
       "why_it_matters": "Use for research synthesis without a hosted semantic-search dependency.",
       "group": "Knowledge workflows"
     },

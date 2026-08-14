@@ -20,8 +20,8 @@ func newCollectionsReorderCmd(flags *rootFlags) *cobra.Command {
 		Use:   "reorder",
 		Short: "Change the sort order of collections",
 		// TODO: replace placeholder example values before relying on this for live dogfood.
-		Example:     "  raindrop-pp-cli collections reorder --sort example-value",
-		Annotations: map[string]string{"pp:endpoint": "collections.reorder", "pp:method": "PUT", "pp:path": "/collections/sort", "mcp:read-only": "true"},
+		Example:     "  raindrop-pp-cli collections reorder --sort title",
+		Annotations: map[string]string{"pp:endpoint": "collections.reorder", "pp:method": "PUT", "pp:path": "/collections"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Bare invocation of a command with required input prints help
 			// instead of pflag's terse "required flag not set" error. Optional-
@@ -46,7 +46,7 @@ func newCollectionsReorderCmd(flags *rootFlags) *cobra.Command {
 					return fmt.Errorf("required flag \"%s\" not set", "sort")
 				}
 			}
-			path := "/collections/sort"
+			path := "/collections"
 			c, err := flags.newClient()
 			if err != nil {
 				return err

@@ -11,7 +11,7 @@ import (
 
 func newSyncStatusCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "status", Short: "Show local mirror counts and checkpoints", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "status", Short: "Show local mirror counts and checkpoints", Example: "  raindrop-pp-cli sync status --agent", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		if dbPath == "" {
 			dbPath = defaultDBPath("raindrop-pp-cli")
 		}

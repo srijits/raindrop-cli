@@ -11,7 +11,7 @@ import (
 func newClustersCmd(flags *rootFlags) *cobra.Command {
 	var minSize int
 	var dbPath string
-	cmd := &cobra.Command{Use: "clusters", Short: "Discover explainable bookmark clusters from shared tags", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "clusters", Short: "Discover explainable bookmark clusters from shared tags", Example: "  raindrop-pp-cli clusters --min-size 3 --agent", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err

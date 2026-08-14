@@ -60,20 +60,6 @@
       ]
     },
     {
-      "name": "bookmark_transfer_get-export-status",
-      "description": "Check the status of an ongoing export operation. Returns the ExportStatusResponse.",
-      "method": "GET",
-      "path": "/export/status",
-      "params": []
-    },
-    {
-      "name": "bookmark_transfer_get-import-status",
-      "description": "Check the status of an ongoing import operation. Returns the ImportStatusResponse.",
-      "method": "GET",
-      "path": "/import/status",
-      "params": []
-    },
-    {
       "name": "bookmark_transfer_import-bookmarks",
       "description": "Import bookmarks from files or external services. Required: file. Optional: collection, format, mode (default: add) (plus 1 more). Returns array of BookmarkTransferImportBookmarksItem.",
       "method": "POST",
@@ -350,32 +336,22 @@
       "params": []
     },
     {
-      "name": "collections_reorder",
-      "description": "Change the sort order of collections. Required: sort. Returns the updated ResultResponse.",
+      "name": "collections_update-layout",
+      "description": "Update global collection order or expanded state. Optional: expanded, sort. Returns the updated ResultResponse.",
       "method": "PUT",
-      "path": "/collections/sort",
+      "path": "/collections",
       "params": [
+        {
+          "name": "expanded",
+          "type": "bool",
+          "location": "body",
+          "description": "Expanded"
+        },
         {
           "name": "sort",
           "type": "string",
           "location": "body",
-          "description": "Sort order specification",
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "collections_toggle-expansion",
-      "description": "Expand or collapse collections in the UI. Required: collapsed. Returns the updated ResultResponse.",
-      "method": "PUT",
-      "path": "/collections/collapsed",
-      "params": [
-        {
-          "name": "collapsed",
-          "type": "bool",
-          "location": "body",
-          "description": "Whether collections should be collapsed",
-          "required": true
+          "description": "Sort"
         }
       ]
     },
@@ -426,10 +402,18 @@
     },
     {
       "name": "filters_get-available",
-      "description": "Returns available filters such as tags, domains, and highlights to refine searches.",
+      "description": "Returns available filters such as tags, domains, and highlights to refine searches. Required: collectionId.",
       "method": "GET",
-      "path": "/filters",
-      "params": []
+      "path": "/filters/{collectionId}",
+      "params": [
+        {
+          "name": "collectionId",
+          "type": "int",
+          "location": "path",
+          "description": "Collection ID, or 0 for all bookmarks",
+          "required": true
+        }
+      ]
     },
     {
       "name": "highlights_add-to-bookmark",
@@ -1275,21 +1259,6 @@
           "type": "string",
           "location": "query",
           "description": "Sort order for results"
-        }
-      ]
-    },
-    {
-      "name": "raindrops_suggest-tags-collections-covers",
-      "description": "Get AI-powered suggestions for organizing a bookmark based on its URL. Required: url. Returns the SuggestionsResponse.",
-      "method": "GET",
-      "path": "/raindrops/suggest",
-      "params": [
-        {
-          "name": "url",
-          "type": "string",
-          "location": "query",
-          "description": "URL to analyze for suggestions",
-          "required": true
         }
       ]
     },

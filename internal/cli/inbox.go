@@ -15,6 +15,7 @@ func newNovelInboxCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:         "inbox",
 		Short:       "inbox subcommands: review",
+		Example:     "  raindrop-pp-cli inbox review --limit 10 --resume",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		RunE:        parentNoSubcommandRunE(flags),
 	}

@@ -20,7 +20,7 @@ type tagMerge struct {
 
 func newTagPlanMergesCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "plan-merges", Short: "Persist deterministic tag merge candidates", Annotations: map[string]string{"mcp:local-write": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "plan-merges", Short: "Persist deterministic tag merge candidates", Example: "  raindrop-pp-cli tag plan-merges --agent", Annotations: map[string]string{"mcp:local-write": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err
@@ -68,7 +68,7 @@ func newTagPlanMergesCmd(flags *rootFlags) *cobra.Command {
 
 func newTagApplyPlanCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "apply-plan <plan-id>", Short: "Apply reviewed tag merge plan", Args: cobra.ExactArgs(1), Annotations: map[string]string{"mcp:destructive": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "apply-plan <plan-id>", Short: "Apply reviewed tag merge plan", Example: "  raindrop-pp-cli tag apply-plan 1 --dry-run --agent", Args: cobra.ExactArgs(1), Annotations: map[string]string{"mcp:destructive": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		id, err := strconv.ParseInt(args[0], 10, 64)
 		if err != nil {
 			return usageErr(err)

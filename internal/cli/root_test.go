@@ -21,8 +21,6 @@ func TestDeclaredAPISurfaceReachable(t *testing.T) {
 	expected := []string{
 		"bookmark-transfer",
 		"bookmark-transfer export-bookmarks",
-		"bookmark-transfer get-export-status",
-		"bookmark-transfer get-import-status",
 		"bookmark-transfer import-bookmarks",
 		"bookmark-transfer import-from-url",
 		"collection",
@@ -82,7 +80,6 @@ func TestDeclaredAPISurfaceReachable(t *testing.T) {
 		"raindrops get-multiple-bookmarks",
 		"raindrops get-single-bookmark",
 		"raindrops search",
-		"raindrops suggest-tags-collections-covers",
 		"tags",
 		"tags delete-all",
 		"tags delete-collection",

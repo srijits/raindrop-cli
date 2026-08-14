@@ -26,6 +26,5 @@ func newRaindropsCmd(flags *rootFlags) *cobra.Command {
 	cmd.AddCommand(newRaindropsGetMultipleBookmarksCmd(flags))
 	cmd.AddCommand(newRaindropsGetSingleBookmarkCmd(flags))
 	cmd.AddCommand(newRaindropsSearchCmd(flags))
-	cmd.AddCommand(newRaindropsSuggestTagsCollectionsCoversCmd(flags))
 	return cmd
 }

@@ -14,7 +14,7 @@ import (
 func newDuplicatesApplyCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
 	cmd := &cobra.Command{
-		Use: "apply <plan-id>", Short: "Apply a reviewed duplicate plan", Args: cobra.ExactArgs(1),
+		Use: "apply <plan-id>", Short: "Apply a reviewed duplicate plan", Example: "  raindrop-pp-cli duplicates apply 1 --dry-run --agent", Args: cobra.ExactArgs(1),
 		Annotations: map[string]string{"mcp:destructive": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			planID, err := strconv.ParseInt(args[0], 10, 64)

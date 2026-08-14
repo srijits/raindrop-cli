@@ -12,7 +12,7 @@ import (
 )
 
 func newWorkflowTriageCmd(flags *rootFlags) *cobra.Command {
-	cmd := &cobra.Command{Use: "triage", Short: "Run crash-safe bounded bookmark queues", RunE: parentNoSubcommandRunE(flags)}
+	cmd := &cobra.Command{Use: "triage", Short: "Run crash-safe bounded bookmark queues", Example: "  raindrop-pp-cli workflow triage status --agent", RunE: parentNoSubcommandRunE(flags)}
 	cmd.AddCommand(newTriageCreateCmd(flags), newTriageNextCmd(flags), newTriageStatusCmd(flags), newTriageRetryCmd(flags))
 	return cmd
 }
@@ -20,7 +20,7 @@ func newWorkflowTriageCmd(flags *rootFlags) *cobra.Command {
 func newTriageCreateCmd(flags *rootFlags) *cobra.Command {
 	var query, dbPath string
 	var batch int
-	cmd := &cobra.Command{Use: "create <name>", Args: cobra.ExactArgs(1), Short: "Create a durable triage queue from the local mirror", RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "create <name>", Args: cobra.ExactArgs(1), Short: "Create a durable triage queue from the local mirror", Example: "  raindrop-pp-cli workflow triage create weekly --query go --batch 10 --agent", RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err
@@ -57,7 +57,7 @@ func newTriageCreateCmd(flags *rootFlags) *cobra.Command {
 
 func newTriageNextCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "next <name>", Args: cobra.ExactArgs(1), Short: "Atomically claim the next triage batch", RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "next <name>", Args: cobra.ExactArgs(1), Short: "Atomically claim the next triage batch", Example: "  raindrop-pp-cli workflow triage next weekly --agent", RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err
@@ -116,7 +116,7 @@ func newTriageNextCmd(flags *rootFlags) *cobra.Command {
 
 func newTriageStatusCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
-	cmd := &cobra.Command{Use: "status [name]", Args: cobra.MaximumNArgs(1), Short: "Show queue lifecycle counts", Annotations: map[string]string{"mcp:read-only": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "status [name]", Args: cobra.MaximumNArgs(1), Short: "Show queue lifecycle counts", Example: "  raindrop-pp-cli workflow triage status --agent", Annotations: map[string]string{"mcp:read-only": "true", "pp:no-error-path-probe": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err
@@ -157,7 +157,7 @@ func newTriageStatusCmd(flags *rootFlags) *cobra.Command {
 
 func newTriageRetryCmd(flags *rootFlags) *cobra.Command {
 	var dbPath, bookmarkID string
-	cmd := &cobra.Command{Use: "retry <name>", Args: cobra.ExactArgs(1), Short: "Return failed or inflight items to the retry queue", RunE: func(cmd *cobra.Command, args []string) error {
+	cmd := &cobra.Command{Use: "retry <name>", Args: cobra.ExactArgs(1), Short: "Return failed or inflight items to the retry queue", Example: "  raindrop-pp-cli workflow triage retry weekly --agent", Annotations: map[string]string{"mcp:local-write": "true", "pp:no-error-path-probe": "true"}, RunE: func(cmd *cobra.Command, args []string) error {
 		db, _, err := openNovelStore(cmd.Context(), dbPath)
 		if err != nil {
 			return err

@@ -18,14 +18,14 @@ func newFiltersPromotedCmd(flags *rootFlags) *cobra.Command {
 		Short:       "Returns available filters such as tags, domains, and highlights to refine searches",
 		Long:        "Returns available filters such as tags, domains, and highlights to refine searches",
 		Example:     "  raindrop-pp-cli filters",
-		Annotations: map[string]string{"pp:endpoint": "filters.get-available", "pp:method": "GET", "pp:path": "/filters", "mcp:read-only": "true"},
+		Annotations: map[string]string{"pp:endpoint": "filters.get-available", "pp:method": "GET", "pp:path": "/filters/0", "mcp:read-only": "true"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()
 			if err != nil {
 				return err
 			}
 
-			path := "/filters"
+			path := "/filters/0"
 			params := map[string]string{}
 			data, prov, err := resolveReadWithStrategyAndResponsePath(cmd.Context(), c, flags, "auto", "filters", false, path, params, nil, "", cmd.ErrOrStderr())
 			if err != nil {

@@ -87,7 +87,7 @@ func newInboxApplyCmd(flags *rootFlags) *cobra.Command {
 	var collectionID int64
 	var skip bool
 	cmd := &cobra.Command{
-		Use: "apply <session-id>", Short: "Apply one staged inbox decision and record confirmation", Args: cobra.ExactArgs(1),
+		Use: "apply <session-id>", Short: "Apply one staged inbox decision and record confirmation", Example: "  raindrop-pp-cli inbox apply session-1 --dry-run --agent", Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			sessionID, err := strconv.ParseInt(args[0], 10, 64)
 			if err != nil {

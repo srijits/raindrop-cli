@@ -68,6 +68,29 @@ paths:
                 $ref: '#/components/schemas/CollectionsResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+    put:
+      operationId: updateCollectionsLayout
+      summary: Reorder or expand collections
+      description: Update global collection order or expanded state
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sort:
+                  type: string
+                  enum: [title, -title, -count]
+                expanded:
+                  type: boolean
+      responses:
+        '200':
+          description: Collection layout updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultResponse'
 
   /collections/{parentId}/childrens:
     get:
@@ -88,56 +111,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CollectionsResponse'
-
-  /collections/sort:
-    put:
-      operationId: reorderCollections
-      summary: Reorder collections
-      description: Change the sort order of collections
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                sort:
-                  type: string
-                  description: Sort order specification
-              required:
-                - sort
-      responses:
-        '200':
-          description: Collections reordered successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultResponse'
-
-  /collections/collapsed:
-    put:
-      operationId: toggleCollectionsExpansion
-      summary: Toggle collections expansion
-      description: Expand or collapse collections in the UI
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                collapsed:
-                  type: boolean
-                  description: Whether collections should be collapsed
-              required:
-                - collapsed
-      responses:
-        '200':
-          description: Collections expansion toggled successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultResponse'
 
   /collections/clean:
     put:
@@ -507,27 +480,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookmarksResponse'
-
-  /raindrops/suggest:
-    get:
-      operationId: suggestTagsCollectionsCovers
-      summary: Suggest tags, collections, and covers based on URL
-      description: Get AI-powered suggestions for organizing a bookmark based on its URL
-      parameters:
-        - name: url
-          in: query
-          required: true
-          schema:
-            type: string
-            format: uri
-          description: URL to analyze for suggestions
-      responses:
-        '200':
-          description: Suggestions retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuggestionsResponse'
 
   /raindrops/move:
     put:
@@ -1081,20 +1033,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ImportJobResponse'
 
-  /import/status:
-    get:
-      x-pp-resource: bookmark_transfer
-      operationId: getImportStatus
-      summary: Get import status
-      description: Check the status of an ongoing import operation
-      responses:
-        '200':
-          description: Import status retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ImportStatusResponse'
-
   /export:
     post:
       x-pp-resource: bookmark_transfer
@@ -1114,20 +1052,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExportResponse'
-
-  /export/status:
-    get:
-      x-pp-resource: bookmark_transfer
-      operationId: getExportStatus
-      summary: Get export status
-      description: Check the status of an ongoing export operation
-      responses:
-        '200':
-          description: Export status retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExportStatusResponse'
 
   # Filters
   /raindrop/suggest:
@@ -1170,11 +1094,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/SuggestionsResponse'
 
-  /filters:
+  /filters/{collectionId}:
     get:
       operationId: getAvailableFilters
       summary: Get available filters for bookmarks
       description: Returns available filters such as tags, domains, and highlights to refine searches
+      parameters:
+        - name: collectionId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Collection ID, or 0 for all bookmarks
       responses:
         '200':
           description: Filters retrieved successfully

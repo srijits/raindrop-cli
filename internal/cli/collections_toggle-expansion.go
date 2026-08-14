@@ -20,8 +20,8 @@ func newCollectionsToggleExpansionCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:         "toggle-expansion",
 		Short:       "Expand or collapse collections in the UI",
-		Example:     "  raindrop-pp-cli collections toggle-expansion",
-		Annotations: map[string]string{"pp:endpoint": "collections.toggle-expansion", "pp:method": "PUT", "pp:path": "/collections/collapsed"},
+		Example:     "  raindrop-pp-cli collections toggle-expansion --collapsed=false",
+		Annotations: map[string]string{"pp:endpoint": "collections.toggle-expansion", "pp:method": "PUT", "pp:path": "/collections"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Bare invocation of a command with required input prints help
 			// instead of pflag's terse "required flag not set" error. Optional-
@@ -46,7 +46,7 @@ func newCollectionsToggleExpansionCmd(flags *rootFlags) *cobra.Command {
 					return fmt.Errorf("required flag \"%s\" not set", "collapsed")
 				}
 			}
-			path := "/collections/collapsed"
+			path := "/collections"
 			c, err := flags.newClient()
 			if err != nil {
 				return err
@@ -71,7 +71,7 @@ func newCollectionsToggleExpansionCmd(flags *rootFlags) *cobra.Command {
 					if err != nil {
 						return fmt.Errorf("parsing --collapsed as bool: %w", err)
 					}
-					bodyMap["collapsed"] = parsedCollapsed
+					bodyMap["expanded"] = !parsedCollapsed
 				}
 			}
 			data, statusCode, err := c.PutWithParams(cmd.Context(), path, params, body)

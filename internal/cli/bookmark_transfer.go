@@ -16,8 +16,6 @@ func newBookmarkTransferCmd(flags *rootFlags) *cobra.Command {
 	}
 
 	cmd.AddCommand(newBookmarkTransferExportBookmarksCmd(flags))
-	cmd.AddCommand(newBookmarkTransferGetExportStatusCmd(flags))
-	cmd.AddCommand(newBookmarkTransferGetImportStatusCmd(flags))
 	cmd.AddCommand(newBookmarkTransferImportBookmarksCmd(flags))
 	cmd.AddCommand(newBookmarkTransferImportFromUrlCmd(flags))
 	return cmd

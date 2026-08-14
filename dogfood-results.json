@@ -2,10 +2,10 @@
   "dir": "\u003ccli-dir\u003e/raindrop",
   "spec_path": "\u003ccli-dir\u003e/spec.yaml",
   "spec_source": "bundled",
-  "verdict": "WARN",
+  "verdict": "PASS",
   "path_check": {
-    "tested": 5,
-    "valid": 5,
+    "tested": 3,
+    "valid": 3,
     "valid_pct": 100
   },
   "auth_check": {
@@ -42,16 +42,15 @@
     "detail": "sync uses domain-specific Upsert methods; search uses domain-specific Search methods; 4 domain tables found"
   },
   "example_check": {
-    "tested": 0,
-    "with_examples": 0,
-    "valid_examples": 0,
-    "skipped": true,
-    "detail": "could not build CLI binary: exit status 1"
+    "tested": 10,
+    "with_examples": 10,
+    "valid_examples": 10,
+    "detail": "10/10 commands have examples"
   },
   "wiring_check": {
     "command_tree": {
-      "defined": 154,
-      "registered": 154
+      "defined": 151,
+      "registered": 151
     },
     "config_consistency": {
       "consistent": true
@@ -77,34 +76,23 @@
     "exempted_via_store": 9
   },
   "description_drift_check": {
-    "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.",
-    "findings": [
-      {
-        "surface": "manifest.description",
-        "file": ".printing-press.json",
-        "actual": "Complete REST API specification for Raindrop.io bookmark management",
-        "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows."
-      }
-    ]
+    "expected": "Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows."
   },
   "source_client_check": {
     "checked": 9
   },
   "print_json_filtered_check": {
-    "checked": 120
+    "checked": 117
   },
   "test_presence": {
     "checked": 2
   },
   "naming_check": {
-    "checked": 120
+    "checked": 117
   },
   "sync_param_drop_check": {
     "checked": 0,
     "skipped": true
   },
-  "issues": [
-    "example check skipped: could not build CLI binary: exit status 1",
-    "1 description surface(s) drifted from research.json narrative: manifest.description in .printing-press.json is \"Complete REST API specification for Raindrop.io bookmark management\"; expected \"Complete Raindrop.io control plus offline search, safe cleanup, and durable knowledge workflows.\""
-  ]
+  "issues": null
 }

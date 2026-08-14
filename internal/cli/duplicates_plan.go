@@ -19,13 +19,12 @@ func newNovelDuplicatesPlanCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
 
 	cmd := &cobra.Command{
-		Use:         "plan",
-		Short:       "Choose canonical bookmarks while preserving tags, notes and highlights.",
-		Example:     "  raindrop-pp-cli duplicates plan --canonical richest --agent",
-		Annotations: map[string]string{"mcp:local-write": "true"},
+		Use:     "plan",
+		Short:   "Choose canonical bookmarks while preserving tags, notes and highlights.",
+		Example: "  raindrop-pp-cli duplicates plan --canonical richest --agent",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if dryRunOK(flags) {
-				return nil
+				return writeDryRun(cmd.OutOrStdout(), flags, "duplicates plan")
 			}
 			if flagCanonical != "richest" && flagCanonical != "newest" && flagCanonical != "oldest" {
 				return fmt.Errorf("--canonical must be richest, newest, or oldest")

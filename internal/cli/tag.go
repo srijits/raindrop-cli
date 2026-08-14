@@ -15,6 +15,7 @@ func newNovelTagCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:         "tag",
 		Short:       "Analyze and safely clean local tag vocabulary",
+		Example:     "  raindrop-pp-cli tag health --agent",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		RunE:        parentNoSubcommandRunE(flags),
 	}

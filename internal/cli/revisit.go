@@ -19,13 +19,12 @@ func newNovelRevisitCmd(flags *rootFlags) *cobra.Command {
 	var dbPath string
 
 	cmd := &cobra.Command{
-		Use:         "revisit",
-		Short:       "Resurface useful forgotten bookmarks without repeating recent suggestions.",
-		Example:     "  raindrop-pp-cli revisit --older-than 180d --limit 20 --agent",
-		Annotations: map[string]string{"mcp:local-write": "true"},
+		Use:     "revisit",
+		Short:   "Resurface useful forgotten bookmarks without repeating recent suggestions.",
+		Example: "  raindrop-pp-cli revisit --older-than 180d --limit 20 --agent",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if dryRunOK(flags) {
-				return nil
+				return writeDryRun(cmd.OutOrStdout(), flags, "revisit")
 			}
 			age, err := parseAge(flagOlderThan, 180*24*time.Hour)
 			if err != nil {

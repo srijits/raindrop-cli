@@ -194,7 +194,7 @@ These capabilities aren't available in any other tool for this API.
   _Use for research synthesis without a hosted semantic-search dependency._
 
   ```bash
-  raindrop related 912345678 --limit 10 --agent
+  raindrop related --limit 10 --agent
   ```
 - **`highlights digest`** — Create deduplicated Markdown or JSONL study digests from highlights.
 
@@ -307,8 +307,6 @@ Existing installs keep working because the platform-default rung matches the leg
 Manage bookmark transfer
 
 - **`raindrop-pp-cli bookmark-transfer export-bookmarks`** - Export bookmarks in various formats
-- **`raindrop-pp-cli bookmark-transfer get-export-status`** - Check the status of an ongoing export operation
-- **`raindrop-pp-cli bookmark-transfer get-import-status`** - Check the status of an ongoing import operation
 - **`raindrop-pp-cli bookmark-transfer import-bookmarks`** - Import bookmarks from files or external services
 - **`raindrop-pp-cli bookmark-transfer import-from-url`** - Import bookmarks from a remote URL hosting a bookmarks file
 
@@ -380,7 +378,6 @@ Manage raindrops
 - **`raindrop-pp-cli raindrops get-multiple-bookmarks`** - Retrieves multiple bookmarks by their IDs
 - **`raindrop-pp-cli raindrops get-single-bookmark`** - Retrieves comprehensive details about a specific bookmark by ID
 - **`raindrop-pp-cli raindrops search`** - Search bookmarks with advanced filtering options
-- **`raindrop-pp-cli raindrops suggest-tags-collections-covers`** - Get AI-powered suggestions for organizing a bookmark based on its URL
 
 ### tags
 
