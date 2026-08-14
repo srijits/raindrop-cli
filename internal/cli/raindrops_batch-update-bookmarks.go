@@ -25,7 +25,7 @@ func newRaindropsBatchUpdateBookmarksCmd(flags *rootFlags) *cobra.Command {
 		Use:         "batch-update-bookmarks",
 		Short:       "Update properties of multiple bookmarks at once",
 		Example:     "  raindrop-pp-cli raindrops batch-update-bookmarks",
-		Annotations: map[string]string{"pp:endpoint": "raindrops.batch-update-bookmarks", "pp:method": "PUT", "pp:path": "/raindrops"},
+		Annotations: map[string]string{"pp:endpoint": "raindrops.batch-update-bookmarks", "pp:method": "PUT", "pp:path": "/raindrops/0"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Bare invocation of a command with required input prints help
 			// instead of pflag's terse "required flag not set" error. Optional-
@@ -50,7 +50,7 @@ func newRaindropsBatchUpdateBookmarksCmd(flags *rootFlags) *cobra.Command {
 					return fmt.Errorf("required flag \"%s\" not set", "ids")
 				}
 			}
-			path := "/raindrops"
+			path := "/raindrops/0"
 			c, err := flags.newClient()
 			if err != nil {
 				return err

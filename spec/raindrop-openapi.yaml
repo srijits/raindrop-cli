@@ -332,6 +332,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/BookmarksResponse'
 
+    put:
+      operationId: batchUpdateBookmarks
+      summary: Update multiple bookmarks across all collections
+      description: Update properties of multiple bookmarks at once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchUpdateBookmarksRequest'
+      responses:
+        '200':
+          description: Bookmarks updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultResponse'
+
   /raindrops/{collectionId}:
     get:
       operationId: getBookmarksByCollection
@@ -447,24 +465,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookmarksResponse'
-
-    put:
-      operationId: batchUpdateBookmarks
-      summary: Update multiple bookmarks
-      description: Update properties of multiple bookmarks at once
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BatchUpdateBookmarksRequest'
-      responses:
-        '200':
-          description: Bookmarks updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultResponse'
 
   /raindrops/single:
     get:
