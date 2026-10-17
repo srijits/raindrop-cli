@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "id": "raindrop-reviewed-upstream-maintenance-20261018",
+  "applied_at": "2026-10-18",
+  "base_run_id": "20260814-120132",
+  "summary": "Preserve fail-closed ambiguous-write retry handling, explicit rate-limit recovery and truthful rollback progress after upstream maintenance updates.",
+  "reason": "A caller idempotency key alone does not prove server-side write deduplication; transactional rollback must not report uncommitted rows as stored.",
+  "files": [
+    "internal/client/client.go",
+    "internal/client/ambiguous_write_retry_test.go",
+    "internal/store/store.go"
+  ],
+  "validated_outcome": "Regression uses a synthetic TLS server to distinguish keyed502 failure (one call) from explicit429 rejection (bounded retry); existing full-suite store and custom duplicate/full-sync checks remain required."
+}

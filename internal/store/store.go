@@ -2737,10 +2737,9 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 		storageID := resourceStorageID(resourceType, id, obj)
 
 		if err := s.upsertGenericResourceTx(tx, resourceType, storageID, item); err != nil {
-			// Return the running stored count rather than zero so callers
-			// inspecting partial progress on failure see what already
-			// landed in earlier loop iterations.
-			return stored, extractFailures, fmt.Errorf("upserting %s/%s: %w", resourceType, storageID, err)
+			// A non-nil error aborts this transaction through the deferred
+			// rollback, so no earlier in-memory progress was committed.
+			return 0, extractFailures, fmt.Errorf("upserting %s/%s: %w", resourceType, storageID, err)
 		}
 		stored++
 
@@ -2751,7 +2750,7 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 
 		savepoint := fmt.Sprintf("pp_typed_%d", i)
 		if _, err := tx.Exec("SAVEPOINT " + savepoint); err != nil {
-			return stored, extractFailures, fmt.Errorf("savepoint begin for %s/%s: %w", resourceType, storageID, err)
+			return 0, extractFailures, fmt.Errorf("savepoint begin for %s/%s: %w", resourceType, storageID, err)
 		}
 
 		var typedErr error
@@ -2792,16 +2791,16 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 
 		if typedErr != nil {
 			if _, rbErr := tx.Exec("ROLLBACK TO SAVEPOINT " + savepoint); rbErr != nil {
-				return stored, extractFailures, fmt.Errorf("rollback to savepoint for %s/%s (typed err: %v): %w", resourceType, storageID, typedErr, rbErr)
+				return 0, extractFailures, fmt.Errorf("rollback to savepoint for %s/%s (typed err: %v): %w", resourceType, storageID, typedErr, rbErr)
 			}
 			if _, relErr := tx.Exec("RELEASE SAVEPOINT " + savepoint); relErr != nil {
-				return stored, extractFailures, fmt.Errorf("release savepoint after rollback for %s/%s: %w", resourceType, storageID, relErr)
+				return 0, extractFailures, fmt.Errorf("release savepoint after rollback for %s/%s: %w", resourceType, storageID, relErr)
 			}
 			typedFailures++
 			continue
 		}
 		if _, err := tx.Exec("RELEASE SAVEPOINT " + savepoint); err != nil {
-			return stored, extractFailures, fmt.Errorf("release savepoint for %s/%s: %w", resourceType, storageID, err)
+			return 0, extractFailures, fmt.Errorf("release savepoint for %s/%s: %w", resourceType, storageID, err)
 		}
 	}
 
